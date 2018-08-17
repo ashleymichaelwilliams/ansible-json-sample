@@ -1,24 +1,25 @@
 ---
 
-  - name: 'Get Record ID'
+  - name: 'Get JSON result'
     uri: url="http://api.plos.org/search?q=title:DNA" return_content=yes
-    register: get_record_id
+    register: get_json_result
 
 
-  - name: 'Display Record ID Property'
+  - name: 'Display the first JSON object's ID property'
     debug: 
-      msg: "ID: {{ (get_record_id.content|from_json)['response']['docs'][0]['id'] }}"
+      msg: "ID: {{ (get_json_result.content|from_json)['response']['docs'][0]['id'] }}"
 
-  - name: 'Display Record ID Property another way'
+  - name: 'Display the first JSON object's ID property another way'
     debug:
-      msg: "ID: {{ get_record_id.json.response.docs[0].id }}"
+      msg: "ID: {{ get_json_result.json.response.docs[0].id }}"
 
 
-  - name: 'Store Result as a String'
+  - name: 'Store the first JSON object as a Ansible fact'
     set_fact: 
-      "json_result": "{{ get_record_id.json.response.docs[0] }}"
+      "json_result": "{{ get_json_result.json.response.docs[0] }}"
 
-  - name: 'Display Result from a Fact'
+  - name: 'Parse and display the first JSON object ID number from the Ansible fact'
     debug:
       msg: "Record ID: {{ json_result.id.split('.')[-1] }}"
+
 
