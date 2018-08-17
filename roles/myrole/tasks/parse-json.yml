@@ -6,8 +6,17 @@
 
   - name: 'Display Record ID Property'
     debug: 
-      msg: "ID1: {{ (get_record_id.content|from_json)['response']['docs'][0]['id'] }}"
+      msg: "ID: {{ (get_record_id.content|from_json)['response']['docs'][0]['id'] }}"
 
-  - name: 'Display Record ID Property another way.'
+  - name: 'Display Record ID Property another way'
     debug:
-      msg: "ID2: {{ get_record_id.json.response.docs[0].id }}"
+      msg: "ID: {{ get_record_id.json.response.docs[0].id }}"
+
+  - name: 'Store Result as a String'
+    set_fact: 
+      "id_result": "{{ get_record_id.json.response.docs[0].id }}"
+
+  - name: 'Display Result from a Fact'
+    debug:
+      msg: "Record ID: {{ id_result }}"
+
