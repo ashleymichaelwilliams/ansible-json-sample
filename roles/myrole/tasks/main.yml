@@ -1,0 +1,6 @@
+---
+# tasks file for myrole
+
+
+  - name: '1-Parse Json'
+    include: parse-json.yml

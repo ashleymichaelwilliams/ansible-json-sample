@@ -1,0 +1,9 @@
+---
+
+  - name: 'Get IP Address'
+    uri: url="http://ifconfig.co/json" return_content=yes
+    register: get_ip_address
+
+  - name: 'Display ID'
+    debug: 
+      msg: "My IP Address: {{ (get_ip_address.content|from_json)['ip'] }}"
