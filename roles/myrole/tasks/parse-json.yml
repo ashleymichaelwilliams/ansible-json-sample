@@ -4,6 +4,7 @@
     uri: url="http://api.plos.org/search?q=title:DNA" return_content=yes
     register: get_record_id
 
+
   - name: 'Display Record ID Property'
     debug: 
       msg: "ID: {{ (get_record_id.content|from_json)['response']['docs'][0]['id'] }}"
@@ -12,11 +13,12 @@
     debug:
       msg: "ID: {{ get_record_id.json.response.docs[0].id }}"
 
+
   - name: 'Store Result as a String'
     set_fact: 
-      "id_result": "{{ get_record_id.json.response.docs[0].id }}"
+      "json_result": "{{ get_record_id.json.response.docs[0] }}"
 
   - name: 'Display Result from a Fact'
     debug:
-      msg: "Record ID: {{ id_result }}"
+      msg: "Record ID: {{ json_result.id.split('.')[-1] }}"
 
