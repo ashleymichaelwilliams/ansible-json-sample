@@ -1,9 +1,13 @@
 ---
 
-  - name: 'Get IP Address'
-    uri: url="http://ifconfig.co/json" return_content=yes
-    register: get_ip_address
+  - name: 'Get Record ID'
+    uri: url="http://api.plos.org/search?q=title:DNA" return_content=yes
+    register: get_record_id
 
-  - name: 'Display ID'
+  - name: 'Display Record ID Property'
     debug: 
-      msg: "My IP Address: {{ (get_ip_address.content|from_json)['ip'] }}"
+      msg: "ID1: {{ (get_record_id.content|from_json)['response']['docs'][0]['id'] }}"
+
+  - name: 'Display Record ID Property another way.'
+    debug:
+      msg: "ID2: {{ get_record_id.json.response.docs[0].id }}"
